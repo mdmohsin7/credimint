@@ -1,0 +1,14 @@
+syntax = "proto3";
+package credimint.credimint;
+
+import "gogoproto/gogo.proto";
+import "credimint/params.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "credimint/x/credimint/types";
+
+// GenesisState defines the credimint module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  // this line is used by starport scaffolding # genesis/proto/state
+}
