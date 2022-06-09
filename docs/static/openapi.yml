@@ -46837,6 +46837,8 @@ definitions:
       borrowerScore:
         type: string
         format: uint64
+  credimint.credimint.MsgRequestLoanResponse:
+    type: object
   credimint.credimint.Params:
     type: object
     description: Params defines the parameters for the module.
