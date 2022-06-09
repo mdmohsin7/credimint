@@ -11,6 +11,7 @@ const DefaultIndex uint64 = 1
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		UserCredibilityList: []UserCredibility{},
+		LoanList:            []Loan{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -30,6 +31,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("userCredibility id should be lower or equal than the last id")
 		}
 		userCredibilityIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in loan
+	loanIdMap := make(map[uint64]bool)
+	loanCount := gs.GetLoanCount()
+	for _, elem := range gs.LoanList {
+		if _, ok := loanIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for loan")
+		}
+		if elem.Id >= loanCount {
+			return fmt.Errorf("loan id should be lower or equal than the last id")
+		}
+		loanIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

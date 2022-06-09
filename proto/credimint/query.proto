@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "credimint/params.proto";
 import "credimint/user_credibility.proto";
+import "credimint/loan.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "credimint/x/credimint/types";
@@ -24,6 +25,16 @@ service Query {
 	// Queries a list of UserCredibility items.
 	rpc UserCredibilityAll(QueryAllUserCredibilityRequest) returns (QueryAllUserCredibilityResponse) {
 		option (google.api.http).get = "/credimint/credimint/user_credibility";
+	}
+
+// Queries a Loan by id.
+	rpc Loan(QueryGetLoanRequest) returns (QueryGetLoanResponse) {
+		option (google.api.http).get = "/credimint/credimint/loan/{id}";
+	}
+
+	// Queries a list of Loan items.
+	rpc LoanAll(QueryAllLoanRequest) returns (QueryAllLoanResponse) {
+		option (google.api.http).get = "/credimint/credimint/loan";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -52,6 +63,23 @@ message QueryAllUserCredibilityRequest {
 
 message QueryAllUserCredibilityResponse {
 	repeated UserCredibility UserCredibility = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetLoanRequest {
+	uint64 id = 1;
+}
+
+message QueryGetLoanResponse {
+	Loan Loan = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllLoanRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllLoanResponse {
+	repeated Loan Loan = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

@@ -31,6 +31,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				UserCredibilityCount: 2,
+				LoanList: []types.Loan{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				LoanCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -58,6 +67,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				UserCredibilityCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated loan",
+			genState: &types.GenesisState{
+				LoanList: []types.Loan{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid loan count",
+			genState: &types.GenesisState{
+				LoanList: []types.Loan{
+					{
+						Id: 1,
+					},
+				},
+				LoanCount: 0,
 			},
 			valid: false,
 		},

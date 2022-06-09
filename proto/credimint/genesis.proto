@@ -4,6 +4,7 @@ package credimint.credimint;
 import "gogoproto/gogo.proto";
 import "credimint/params.proto";
 import "credimint/user_credibility.proto";
+import "credimint/loan.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "credimint/x/credimint/types";
@@ -13,5 +14,7 @@ message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   repeated UserCredibility userCredibilityList = 2 [(gogoproto.nullable) = false];
   uint64 userCredibilityCount = 3;
+  repeated Loan loanList = 4 [(gogoproto.nullable) = false];
+  uint64 loanCount = 5;
   // this line is used by starport scaffolding # genesis/proto/state
 }

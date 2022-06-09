@@ -25,3 +25,8 @@ const (
 	UserCredibilityKey      = "UserCredibility-value-"
 	UserCredibilityCountKey = "UserCredibility-count-"
 )
+
+const (
+	LoanKey      = "Loan-value-"
+	LoanCountKey = "Loan-count-"
+)
