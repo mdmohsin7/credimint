@@ -19,12 +19,47 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc:     "valid genesis state",
+			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
+				UserCredibilityList: []types.UserCredibility{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				UserCredibilityCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
+		},
+		{
+			desc: "duplicated userCredibility",
+			genState: &types.GenesisState{
+				UserCredibilityList: []types.UserCredibility{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid userCredibility count",
+			genState: &types.GenesisState{
+				UserCredibilityList: []types.UserCredibility{
+					{
+						Id: 1,
+					},
+				},
+				UserCredibilityCount: 0,
+			},
+			valid: false,
 		},
 		// this line is used by starport scaffolding # types/genesis/testcase
 	} {
