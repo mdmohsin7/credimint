@@ -7,10 +7,21 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
+import { MsgRequestLoan } from "./types/credimint/credimint/tx";
 
 
-export {  };
+export { MsgRequestLoan };
 
+type sendMsgRequestLoanParams = {
+  value: MsgRequestLoan,
+  fee?: StdFee,
+  memo?: string
+};
+
+
+type msgRequestLoanParams = {
+  value: MsgRequestLoan,
+};
 
 
 export const registry = new Registry(msgTypes);
@@ -30,6 +41,28 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
+		async sendMsgRequestLoan({ value, fee, memo }: sendMsgRequestLoanParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgRequestLoan: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgRequestLoan({ value: MsgRequestLoan.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgRequestLoan: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		
+		msgRequestLoan({ value }: msgRequestLoanParams): EncodeObject {
+			try {
+				return { typeUrl: "/credimint.credimint.MsgRequestLoan", value: MsgRequestLoan.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgRequestLoan: Could not create message: ' + e.message)
+			}
+		},
 		
 	}
 };

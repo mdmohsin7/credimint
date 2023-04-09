@@ -24,6 +24,8 @@ export interface CredimintLoan {
   lenderScore?: string;
 }
 
+export type CredimintMsgRequestLoanResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */
