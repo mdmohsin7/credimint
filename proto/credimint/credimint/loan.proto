@@ -1,0 +1,19 @@
+syntax = "proto3";
+package credimint.credimint;
+
+option go_package = "credimint/x/credimint/types";
+
+message Loan {
+  uint64 id = 1;
+  string amoount = 2; 
+  string fee = 3; 
+  string collateral = 4; 
+  string deadline = 5; 
+  string state = 6; 
+  string borrower = 7; 
+  string lender = 8; 
+  string riskLevel = 9; 
+  string borrowerScore = 10; 
+  string lenderScore = 11; 
+  
+}
