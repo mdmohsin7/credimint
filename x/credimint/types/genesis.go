@@ -13,6 +13,7 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		PortId:   PortID,
 		LoanList: []Loan{},
+		UserList: []User{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -35,6 +36,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("loan id should be lower or equal than the last id")
 		}
 		loanIdMap[elem.Id] = true
+	}
+	// Check for duplicated index in user
+	userIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.UserList {
+		index := string(UserKey(elem.Index))
+		if _, ok := userIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for user")
+		}
+		userIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

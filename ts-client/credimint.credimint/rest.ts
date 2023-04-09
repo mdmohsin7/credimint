@@ -46,8 +46,27 @@ export interface CredimintQueryAllLoanResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface CredimintQueryAllUserResponse {
+  user?: CredimintUser[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface CredimintQueryGetLoanResponse {
   Loan?: CredimintLoan;
+}
+
+export interface CredimintQueryGetUserResponse {
+  user?: CredimintUser;
 }
 
 /**
@@ -56,6 +75,30 @@ export interface CredimintQueryGetLoanResponse {
 export interface CredimintQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: CredimintParams;
+}
+
+export interface CredimintUser {
+  index?: string;
+
+  /** @format uint64 */
+  creditScore?: string;
+
+  /** @format uint64 */
+  timelyPayments?: string;
+  defaultRate?: string;
+
+  /** @format uint64 */
+  numberOfLoans?: string;
+
+  /** @format uint64 */
+  loanDuration?: string;
+
+  /** @format uint64 */
+  numberOfLoansFunded?: string;
+
+  /** @format uint64 */
+  loanFundedDuration?: string;
+  collateralPercent?: string;
 }
 
 export interface ProtobufAny {
@@ -319,6 +362,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryParams = (params: RequestParams = {}) =>
     this.request<CredimintQueryParamsResponse, RpcStatus>({
       path: `/credimint/credimint/params`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryUserAll
+   * @summary Queries a list of User items.
+   * @request GET:/credimint/credimint/user
+   */
+  queryUserAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<CredimintQueryAllUserResponse, RpcStatus>({
+      path: `/credimint/credimint/user`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryUser
+   * @summary Queries a User by index.
+   * @request GET:/credimint/credimint/user/{index}
+   */
+  queryUser = (index: string, params: RequestParams = {}) =>
+    this.request<CredimintQueryGetUserResponse, RpcStatus>({
+      path: `/credimint/credimint/user/${index}`,
       method: "GET",
       format: "json",
       ...params,

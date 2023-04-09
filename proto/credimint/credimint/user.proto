@@ -1,0 +1,18 @@
+syntax = "proto3";
+package credimint.credimint;
+
+option go_package = "credimint/x/credimint/types";
+
+message User {
+  string index = 1; 
+  uint64 creditScore = 2; 
+  uint64 timelyPayments = 3; 
+  string defaultRate = 4; 
+  uint64 numberOfLoans = 5; 
+  uint64 loanDuration = 6; 
+  uint64 numberOfLoansFunded = 7; 
+  uint64 loanFundedDuration = 8; 
+  string collateralPercent = 9; 
+  
+}
+

@@ -4,9 +4,10 @@ import { Loan } from "credimint-client-ts/credimint.credimint/types"
 import { CredimintPacketData } from "credimint-client-ts/credimint.credimint/types"
 import { NoData } from "credimint-client-ts/credimint.credimint/types"
 import { Params } from "credimint-client-ts/credimint.credimint/types"
+import { User } from "credimint-client-ts/credimint.credimint/types"
 
 
-export { Loan, CredimintPacketData, NoData, Params };
+export { Loan, CredimintPacketData, NoData, Params, User };
 
 function initClient(vuexGetters) {
 	return new Client(vuexGetters['common/env/getEnv'], vuexGetters['common/wallet/signer'])
@@ -40,12 +41,15 @@ const getDefaultState = () => {
 				Params: {},
 				Loan: {},
 				LoanAll: {},
+				User: {},
+				UserAll: {},
 				
 				_Structure: {
 						Loan: getStructure(Loan.fromPartial({})),
 						CredimintPacketData: getStructure(CredimintPacketData.fromPartial({})),
 						NoData: getStructure(NoData.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
+						User: getStructure(User.fromPartial({})),
 						
 		},
 		_Registry: registry,
@@ -91,6 +95,18 @@ export default {
 						(<any> params).query=null
 					}
 			return state.LoanAll[JSON.stringify(params)] ?? {}
+		},
+				getUser: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.User[JSON.stringify(params)] ?? {}
+		},
+				getUserAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.UserAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -191,6 +207,54 @@ export default {
 				return getters['getLoanAll']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QueryLoanAll API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryUser({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const client = initClient(rootGetters);
+				let value= (await client.CredimintCredimint.query.queryUser( key.index)).data
+				
+					
+				commit('QUERY', { query: 'User', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryUser', payload: { options: { all }, params: {...key},query }})
+				return getters['getUser']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryUser API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryUserAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const client = initClient(rootGetters);
+				let value= (await client.CredimintCredimint.query.queryUserAll(query ?? undefined)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await client.CredimintCredimint.query.queryUserAll({...query ?? {}, 'pagination.key':(<any> value).pagination.next_key} as any)).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'UserAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryUserAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getUserAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryUserAll API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},

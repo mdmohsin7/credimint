@@ -23,6 +23,14 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		LoanCount: 2,
+		UserList: []types.User{
+			{
+				Index: "0",
+			},
+			{
+				Index: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -38,5 +46,6 @@ func TestGenesis(t *testing.T) {
 
 	require.ElementsMatch(t, genesisState.LoanList, got.LoanList)
 	require.Equal(t, genesisState.LoanCount, got.LoanCount)
+	require.ElementsMatch(t, genesisState.UserList, got.UserList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

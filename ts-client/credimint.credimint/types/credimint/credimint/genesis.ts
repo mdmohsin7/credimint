@@ -3,6 +3,7 @@ import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Loan } from "./loan";
 import { Params } from "./params";
+import { User } from "./user";
 
 export const protobufPackage = "credimint.credimint";
 
@@ -11,12 +12,13 @@ export interface GenesisState {
   params: Params | undefined;
   portId: string;
   loanList: Loan[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   loanCount: number;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  userList: User[];
 }
 
 function createBaseGenesisState(): GenesisState {
-  return { params: undefined, portId: "", loanList: [], loanCount: 0 };
+  return { params: undefined, portId: "", loanList: [], loanCount: 0, userList: [] };
 }
 
 export const GenesisState = {
@@ -32,6 +34,9 @@ export const GenesisState = {
     }
     if (message.loanCount !== 0) {
       writer.uint32(32).uint64(message.loanCount);
+    }
+    for (const v of message.userList) {
+      User.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -55,6 +60,9 @@ export const GenesisState = {
         case 4:
           message.loanCount = longToNumber(reader.uint64() as Long);
           break;
+        case 5:
+          message.userList.push(User.decode(reader, reader.uint32()));
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -69,6 +77,7 @@ export const GenesisState = {
       portId: isSet(object.portId) ? String(object.portId) : "",
       loanList: Array.isArray(object?.loanList) ? object.loanList.map((e: any) => Loan.fromJSON(e)) : [],
       loanCount: isSet(object.loanCount) ? Number(object.loanCount) : 0,
+      userList: Array.isArray(object?.userList) ? object.userList.map((e: any) => User.fromJSON(e)) : [],
     };
   },
 
@@ -82,6 +91,11 @@ export const GenesisState = {
       obj.loanList = [];
     }
     message.loanCount !== undefined && (obj.loanCount = Math.round(message.loanCount));
+    if (message.userList) {
+      obj.userList = message.userList.map((e) => e ? User.toJSON(e) : undefined);
+    } else {
+      obj.userList = [];
+    }
     return obj;
   },
 
@@ -93,6 +107,7 @@ export const GenesisState = {
     message.portId = object.portId ?? "";
     message.loanList = object.loanList?.map((e) => Loan.fromPartial(e)) || [];
     message.loanCount = object.loanCount ?? 0;
+    message.userList = object.userList?.map((e) => User.fromPartial(e)) || [];
     return message;
   },
 };
