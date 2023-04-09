@@ -1,8 +1,10 @@
 // THIS FILE IS GENERATED AUTOMATICALLY. DO NOT MODIFY.
 
+import CredimintCredimint from './credimint.credimint'
 
 
 export default { 
+  CredimintCredimint: load(CredimintCredimint, 'credimint.credimint'),
   
 }
 
