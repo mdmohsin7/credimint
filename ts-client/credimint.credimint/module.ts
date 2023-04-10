@@ -7,10 +7,17 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
+import { MsgApproveLoan } from "./types/credimint/credimint/tx";
 import { MsgRequestLoan } from "./types/credimint/credimint/tx";
 
 
-export { MsgRequestLoan };
+export { MsgApproveLoan, MsgRequestLoan };
+
+type sendMsgApproveLoanParams = {
+  value: MsgApproveLoan,
+  fee?: StdFee,
+  memo?: string
+};
 
 type sendMsgRequestLoanParams = {
   value: MsgRequestLoan,
@@ -18,6 +25,10 @@ type sendMsgRequestLoanParams = {
   memo?: string
 };
 
+
+type msgApproveLoanParams = {
+  value: MsgApproveLoan,
+};
 
 type msgRequestLoanParams = {
   value: MsgRequestLoan,
@@ -41,6 +52,20 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
+		async sendMsgApproveLoan({ value, fee, memo }: sendMsgApproveLoanParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgApproveLoan: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgApproveLoan({ value: MsgApproveLoan.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgApproveLoan: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		async sendMsgRequestLoan({ value, fee, memo }: sendMsgRequestLoanParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgRequestLoan: Unable to sign Tx. Signer is not present.')
@@ -55,6 +80,14 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
+		
+		msgApproveLoan({ value }: msgApproveLoanParams): EncodeObject {
+			try {
+				return { typeUrl: "/credimint.credimint.MsgApproveLoan", value: MsgApproveLoan.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgApproveLoan: Could not create message: ' + e.message)
+			}
+		},
 		
 		msgRequestLoan({ value }: msgRequestLoanParams): EncodeObject {
 			try {

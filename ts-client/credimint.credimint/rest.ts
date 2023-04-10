@@ -24,6 +24,8 @@ export interface CredimintLoan {
   lenderScore?: string;
 }
 
+export type CredimintMsgApproveLoanResponse = object;
+
 export type CredimintMsgRequestLoanResponse = object;
 
 /**
