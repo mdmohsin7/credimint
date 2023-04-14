@@ -22,6 +22,9 @@ func (k msgServer) ApproveLoan(goCtx context.Context, msg *types.MsgApproveLoan)
 	lender, _ := sdk.AccAddressFromBech32(msg.Creator)
 	borrower, _ := sdk.AccAddressFromBech32(loan.Borrower)
 	amount, err := sdk.ParseCoinsNormalized(loan.Amoount)
+	var mintAmount = sdk.NewCoins(sdk.NewCoin("ucred", amount[0].Amount))
+	k.bankKeeper.MintCoins(ctx, types.ModuleName, mintAmount)
+	k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, lender, mintAmount)
 	var user, usrFound = k.GetUser(ctx, msg.Creator)
 	if !usrFound {
 		user = types.User{
