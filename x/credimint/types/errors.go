@@ -13,4 +13,5 @@ var (
 	ErrInvalidVersion       = sdkerrors.Register(ModuleName, 1501, "invalid version")
 	ErrUserNotFound         = sdkerrors.Register(ModuleName, 2, " User with this address not found")
 	ErrWrongLoanState       = sdkerrors.Register(ModuleName, 3, "wrong loan state")
+	ErrDeadline             = sdkerrors.Register(ModuleName, 4, "deadline")
 )
