@@ -36,8 +36,9 @@ func UpdateBorrowerScore(borrower *types.User, loan *types.Loan) {
 	// Adjust the credit score based on the number of timely payments
 	creditScore += borrower.TimelyPayments * 10
 
+	var defaultedLoansCount = borrower.NumberOfLoans - borrower.TimelyPayments
+	var defaultRate = defaultedLoansCount / borrower.NumberOfLoans
 	// Adjust the credit score based on the default rate
-	var defaultRate, _ = strconv.ParseFloat(borrower.DefaultRate, 64)
 	creditScore -= uint64(defaultRate) * 10
 
 	// Adjust the credit score based on the number of loans
