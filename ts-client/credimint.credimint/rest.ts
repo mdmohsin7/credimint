@@ -26,6 +26,8 @@ export interface CredimintLoan {
 
 export type CredimintMsgApproveLoanResponse = object;
 
+export type CredimintMsgRepayLoanResponse = object;
+
 export type CredimintMsgRequestLoanResponse = object;
 
 /**

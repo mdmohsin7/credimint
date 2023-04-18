@@ -66674,6 +66674,8 @@ definitions:
         type: string
   credimint.credimint.MsgApproveLoanResponse:
     type: object
+  credimint.credimint.MsgRepayLoanResponse:
+    type: object
   credimint.credimint.MsgRequestLoanResponse:
     type: object
   credimint.credimint.Params:
