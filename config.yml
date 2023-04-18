@@ -1,12 +1,12 @@
 version: 1
 accounts:
   - name: alice
-    coins: ["20000token", "200000000stake"]
+    coins: ["100000000scred", "500000000cred"]
   - name: bob
-    coins: ["10000token", "100000000stake"]
+    coins: ["20000scred","100000000cred"]
 validators:
   - name: alice
-    bonded: "100000000stake"
+    bonded: "100000000cred"
 client:
   openapi:
     path: "docs/static/openapi.yml"
@@ -16,4 +16,9 @@ client:
     path: "vue/src/store"
 faucet:
   name: bob
-  coins: ["5token", "100000stake"]
+  coins: ["100000cred"]
+genesis:
+  app_state:
+    staking:
+      params:
+        bond_denom: "cred"
