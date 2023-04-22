@@ -273,6 +273,19 @@ export default {
 				}
 			}
 		},
+		async sendMsgApproveLoan({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.CredimintCredimint.tx.sendMsgApproveLoan({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgApproveLoan:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgApproveLoan:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgRepayLoan({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -286,16 +299,16 @@ export default {
 				}
 			}
 		},
-		async sendMsgApproveLoan({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgLiquidStake({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.CredimintCredimint.tx.sendMsgApproveLoan({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.CredimintCredimint.tx.sendMsgLiquidStake({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgApproveLoan:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgLiquidStake:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgApproveLoan:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgLiquidStake:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -326,6 +339,19 @@ export default {
 				}
 			}
 		},
+		async MsgApproveLoan({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.CredimintCredimint.tx.msgApproveLoan({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgApproveLoan:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgApproveLoan:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgRepayLoan({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
@@ -339,16 +365,16 @@ export default {
 				}
 			}
 		},
-		async MsgApproveLoan({ rootGetters }, { value }) {
+		async MsgLiquidStake({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CredimintCredimint.tx.msgApproveLoan({value})
+				const msg = await client.CredimintCredimint.tx.msgLiquidStake({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgApproveLoan:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgLiquidStake:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgApproveLoan:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgLiquidStake:Create Could not create message: ' + e.message)
 				}
 			}
 		},

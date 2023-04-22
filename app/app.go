@@ -107,6 +107,7 @@ import (
 	credimintmodule "credimint/x/credimint"
 	credimintmodulekeeper "credimint/x/credimint/keeper"
 	credimintmoduletypes "credimint/x/credimint/types"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "credimint/app/params"

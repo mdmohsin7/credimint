@@ -419,6 +419,102 @@ func (m *MsgLiquidateLoanResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgLiquidateLoanResponse proto.InternalMessageInfo
 
+type MsgLiquidStake struct {
+	Creator   string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Amount    string `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Validator string `protobuf:"bytes,3,opt,name=validator,proto3" json:"validator,omitempty"`
+}
+
+func (m *MsgLiquidStake) Reset()         { *m = MsgLiquidStake{} }
+func (m *MsgLiquidStake) String() string { return proto.CompactTextString(m) }
+func (*MsgLiquidStake) ProtoMessage()    {}
+func (*MsgLiquidStake) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e06dc98c4e020ad6, []int{8}
+}
+func (m *MsgLiquidStake) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgLiquidStake) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgLiquidStake.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgLiquidStake) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgLiquidStake.Merge(m, src)
+}
+func (m *MsgLiquidStake) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgLiquidStake) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgLiquidStake.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgLiquidStake proto.InternalMessageInfo
+
+func (m *MsgLiquidStake) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgLiquidStake) GetAmount() string {
+	if m != nil {
+		return m.Amount
+	}
+	return ""
+}
+
+func (m *MsgLiquidStake) GetValidator() string {
+	if m != nil {
+		return m.Validator
+	}
+	return ""
+}
+
+type MsgLiquidStakeResponse struct {
+}
+
+func (m *MsgLiquidStakeResponse) Reset()         { *m = MsgLiquidStakeResponse{} }
+func (m *MsgLiquidStakeResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgLiquidStakeResponse) ProtoMessage()    {}
+func (*MsgLiquidStakeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e06dc98c4e020ad6, []int{9}
+}
+func (m *MsgLiquidStakeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgLiquidStakeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgLiquidStakeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgLiquidStakeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgLiquidStakeResponse.Merge(m, src)
+}
+func (m *MsgLiquidStakeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgLiquidStakeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgLiquidStakeResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgLiquidStakeResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgRequestLoan)(nil), "credimint.credimint.MsgRequestLoan")
 	proto.RegisterType((*MsgRequestLoanResponse)(nil), "credimint.credimint.MsgRequestLoanResponse")
@@ -428,37 +524,42 @@ func init() {
 	proto.RegisterType((*MsgRepayLoanResponse)(nil), "credimint.credimint.MsgRepayLoanResponse")
 	proto.RegisterType((*MsgLiquidateLoan)(nil), "credimint.credimint.MsgLiquidateLoan")
 	proto.RegisterType((*MsgLiquidateLoanResponse)(nil), "credimint.credimint.MsgLiquidateLoanResponse")
+	proto.RegisterType((*MsgLiquidStake)(nil), "credimint.credimint.MsgLiquidStake")
+	proto.RegisterType((*MsgLiquidStakeResponse)(nil), "credimint.credimint.MsgLiquidStakeResponse")
 }
 
 func init() { proto.RegisterFile("credimint/credimint/tx.proto", fileDescriptor_e06dc98c4e020ad6) }
 
 var fileDescriptor_e06dc98c4e020ad6 = []byte{
-	// 392 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0x4d, 0x6b, 0xea, 0x40,
-	0x14, 0x35, 0xc6, 0xe7, 0x7b, 0xde, 0xf7, 0x9e, 0x4f, 0xe6, 0x15, 0x19, 0x52, 0x09, 0x6d, 0x4a,
-	0xc1, 0x52, 0x9a, 0x42, 0x4b, 0x37, 0xdd, 0xb5, 0x6b, 0xdd, 0x84, 0x52, 0x68, 0x37, 0x65, 0x6a,
-	0x46, 0x19, 0x88, 0x99, 0x98, 0x8c, 0x45, 0x7f, 0x42, 0x77, 0xfe, 0xac, 0x2e, 0x5d, 0x76, 0x59,
-	0xf4, 0x8f, 0x14, 0x87, 0x7c, 0x4c, 0xc4, 0xa0, 0xee, 0xee, 0xc7, 0xb9, 0xf7, 0x9c, 0xe1, 0xcc,
-	0x85, 0x56, 0x2f, 0xa4, 0x2e, 0x1b, 0x32, 0x5f, 0x5c, 0x66, 0x91, 0x98, 0xd8, 0x41, 0xc8, 0x05,
-	0x47, 0xff, 0xd3, 0x9a, 0x9d, 0x46, 0xd6, 0x4c, 0x83, 0x7a, 0x37, 0x1a, 0x38, 0x74, 0x34, 0xa6,
-	0x91, 0xe8, 0x70, 0xe2, 0x23, 0x0c, 0x3f, 0x7b, 0x21, 0x25, 0x82, 0x87, 0x58, 0x3b, 0xd2, 0xda,
-	0x35, 0x27, 0x49, 0x51, 0x13, 0xaa, 0x64, 0xc8, 0xc7, 0xbe, 0xc0, 0x65, 0xd9, 0x88, 0x33, 0xd4,
-	0x00, 0xbd, 0x4f, 0x29, 0xd6, 0x65, 0x71, 0x15, 0x22, 0x13, 0xa0, 0xc7, 0x3d, 0x8f, 0x08, 0x1a,
-	0x12, 0x0f, 0x57, 0x64, 0x43, 0xa9, 0x20, 0x03, 0x7e, 0xb9, 0x94, 0xb8, 0x1e, 0xf3, 0x29, 0xfe,
-	0x21, 0xbb, 0x69, 0x6e, 0x61, 0x68, 0xe6, 0x15, 0x39, 0x34, 0x0a, 0xb8, 0x1f, 0x51, 0xeb, 0x56,
-	0x6a, 0xbd, 0x0b, 0x82, 0x90, 0xbf, 0xd1, 0x2d, 0x5a, 0xeb, 0x50, 0x66, 0xae, 0xd4, 0x59, 0x71,
-	0xca, 0xcc, 0x8d, 0xb7, 0x2a, 0xb3, 0xe9, 0xd6, 0x47, 0xf8, 0x23, 0xf9, 0x02, 0x32, 0xdd, 0x6f,
-	0x27, 0x6a, 0x41, 0x2d, 0x5c, 0x8d, 0x3d, 0xb0, 0x61, 0xf2, 0xfa, 0xac, 0x60, 0x35, 0xe1, 0x40,
-	0xdd, 0x9b, 0xf2, 0xf5, 0xa1, 0xd1, 0x8d, 0x06, 0x1d, 0x36, 0x1a, 0x33, 0x97, 0x88, 0x3d, 0xdf,
-	0x81, 0xda, 0xf0, 0xcf, 0x8b, 0x47, 0x19, 0xf7, 0x15, 0xe6, 0xf5, 0xb2, 0x65, 0x00, 0x5e, 0xe7,
-	0x49, 0x34, 0x5c, 0xbd, 0xeb, 0xa0, 0x77, 0xa3, 0x01, 0x7a, 0x81, 0xdf, 0xaa, 0xf5, 0x27, 0xf6,
-	0x86, 0x3f, 0x62, 0xe7, 0xdd, 0x30, 0xce, 0x77, 0x00, 0x25, 0x44, 0x2b, 0x02, 0xd5, 0xaf, 0x42,
-	0x02, 0x05, 0x54, 0x4c, 0xb0, 0xc1, 0x3d, 0xf4, 0x04, 0xb5, 0xcc, 0xba, 0xe3, 0x62, 0x69, 0x31,
-	0xc4, 0x38, 0xdb, 0x0a, 0x49, 0x57, 0x53, 0xf8, 0x9b, 0x77, 0xe9, 0xb4, 0x68, 0x36, 0x07, 0x33,
-	0x2e, 0x76, 0x82, 0x25, 0x34, 0xf7, 0x37, 0x1f, 0x0b, 0x53, 0x9b, 0x2f, 0x4c, 0xed, 0x6b, 0x61,
-	0x6a, 0xb3, 0xa5, 0x59, 0x9a, 0x2f, 0xcd, 0xd2, 0xe7, 0xd2, 0x2c, 0x3d, 0x1f, 0x66, 0x57, 0x3c,
-	0x51, 0x2f, 0x7a, 0x1a, 0xd0, 0xe8, 0xb5, 0x2a, 0xaf, 0xfa, 0xfa, 0x3b, 0x00, 0x00, 0xff, 0xff,
-	0x36, 0x31, 0x00, 0x47, 0xf5, 0x03, 0x00, 0x00,
+	// 437 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0x41, 0xaf, 0xd2, 0x40,
+	0x10, 0xa6, 0xf4, 0xf9, 0xb4, 0xa3, 0x3e, 0x5f, 0x56, 0x43, 0x36, 0x95, 0x34, 0x5a, 0x62, 0x82,
+	0x31, 0xd6, 0x44, 0xe3, 0xc5, 0x9b, 0x9e, 0xe1, 0x52, 0x8d, 0x89, 0x5e, 0x74, 0xa5, 0x0b, 0xd9,
+	0x58, 0xba, 0x65, 0xbb, 0x10, 0xf8, 0x17, 0xfc, 0x2c, 0x8f, 0x1c, 0x3d, 0x1a, 0xb8, 0xf9, 0x2b,
+	0x4c, 0xd7, 0x76, 0xbb, 0x25, 0x54, 0xc0, 0xdb, 0xee, 0xcc, 0x37, 0xf3, 0x7d, 0x3b, 0xfb, 0x65,
+	0xa0, 0x3b, 0x12, 0x34, 0x62, 0x53, 0x96, 0xc8, 0x17, 0xd5, 0x49, 0x2e, 0x83, 0x54, 0x70, 0xc9,
+	0xd1, 0x7d, 0x1d, 0x0b, 0xf4, 0xc9, 0x5f, 0x5b, 0x70, 0x35, 0xcc, 0x26, 0x21, 0x9d, 0xcd, 0x69,
+	0x26, 0x07, 0x9c, 0x24, 0x08, 0xc3, 0xcd, 0x91, 0xa0, 0x44, 0x72, 0x81, 0xad, 0x47, 0x56, 0xdf,
+	0x09, 0xcb, 0x2b, 0xea, 0xc0, 0x25, 0x99, 0xf2, 0x79, 0x22, 0x71, 0x5b, 0x25, 0x8a, 0x1b, 0xba,
+	0x06, 0x7b, 0x4c, 0x29, 0xb6, 0x55, 0x30, 0x3f, 0x22, 0x0f, 0x60, 0xc4, 0xe3, 0x98, 0x48, 0x2a,
+	0x48, 0x8c, 0x2f, 0x54, 0xc2, 0x88, 0x20, 0x17, 0x6e, 0x45, 0x94, 0x44, 0x31, 0x4b, 0x28, 0xbe,
+	0xa1, 0xb2, 0xfa, 0xee, 0x63, 0xe8, 0xd4, 0x15, 0x85, 0x34, 0x4b, 0x79, 0x92, 0x51, 0xff, 0x8d,
+	0xd2, 0xfa, 0x36, 0x4d, 0x05, 0x5f, 0xd0, 0x23, 0x5a, 0xaf, 0xa0, 0xcd, 0x22, 0xa5, 0xf3, 0x22,
+	0x6c, 0xb3, 0xa8, 0xe8, 0x6a, 0xd4, 0xea, 0xae, 0x1f, 0xe1, 0x8e, 0xe2, 0x4b, 0xc9, 0xea, 0xbc,
+	0x9e, 0xa8, 0x0b, 0x8e, 0xc8, 0xcb, 0x3e, 0xb0, 0x69, 0xf9, 0xfa, 0x2a, 0xe0, 0x77, 0xe0, 0x81,
+	0xd9, 0x57, 0xf3, 0x8d, 0xe1, 0x7a, 0x98, 0x4d, 0x06, 0x6c, 0x36, 0x67, 0x11, 0x91, 0x67, 0xbe,
+	0x03, 0xf5, 0xe1, 0x5e, 0x5c, 0x94, 0x32, 0x9e, 0x18, 0xcc, 0xfb, 0x61, 0xdf, 0x05, 0xbc, 0xcf,
+	0xa3, 0x35, 0x7c, 0x55, 0x93, 0xfc, 0x9b, 0x7b, 0x2f, 0xc9, 0x77, 0xfa, 0x1f, 0xbf, 0xde, 0x05,
+	0x67, 0x41, 0xe2, 0xbc, 0x37, 0x17, 0xe5, 0xeb, 0x75, 0xa0, 0x98, 0xb7, 0xc1, 0x50, 0x72, 0xbf,
+	0xfc, 0x6d, 0x83, 0x3d, 0xcc, 0x26, 0xe8, 0x0b, 0xdc, 0x36, 0x6d, 0xd7, 0x0b, 0x0e, 0xf8, 0x33,
+	0xa8, 0x3b, 0xc1, 0x7d, 0x76, 0x02, 0xa8, 0x24, 0xca, 0x09, 0x4c, 0xaf, 0x34, 0x12, 0x18, 0xa0,
+	0x66, 0x82, 0x03, 0xce, 0x41, 0x9f, 0xc0, 0xa9, 0x6c, 0xf3, 0xb8, 0x59, 0x5a, 0x01, 0x71, 0x9f,
+	0x1e, 0x85, 0xe8, 0xd6, 0x14, 0xee, 0xd6, 0x1d, 0xf2, 0xa4, 0xa9, 0xb6, 0x06, 0x73, 0x9f, 0x9f,
+	0x04, 0x33, 0x47, 0x64, 0x9a, 0xa0, 0xf7, 0xef, 0x6a, 0x05, 0x6a, 0x1e, 0xd1, 0x81, 0xcf, 0x7e,
+	0xf7, 0xfa, 0xc7, 0xd6, 0xb3, 0x36, 0x5b, 0xcf, 0xfa, 0xb5, 0xf5, 0xac, 0xf5, 0xce, 0x6b, 0x6d,
+	0x76, 0x5e, 0xeb, 0xe7, 0xce, 0x6b, 0x7d, 0x7e, 0x58, 0xad, 0xa8, 0xa5, 0xb9, 0xae, 0x56, 0x29,
+	0xcd, 0xbe, 0x5d, 0xaa, 0x95, 0xf5, 0xea, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x25, 0x98, 0xea,
+	0x93, 0xd2, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -477,6 +578,7 @@ type MsgClient interface {
 	ApproveLoan(ctx context.Context, in *MsgApproveLoan, opts ...grpc.CallOption) (*MsgApproveLoanResponse, error)
 	RepayLoan(ctx context.Context, in *MsgRepayLoan, opts ...grpc.CallOption) (*MsgRepayLoanResponse, error)
 	LiquidateLoan(ctx context.Context, in *MsgLiquidateLoan, opts ...grpc.CallOption) (*MsgLiquidateLoanResponse, error)
+	LiquidStake(ctx context.Context, in *MsgLiquidStake, opts ...grpc.CallOption) (*MsgLiquidStakeResponse, error)
 }
 
 type msgClient struct {
@@ -523,12 +625,22 @@ func (c *msgClient) LiquidateLoan(ctx context.Context, in *MsgLiquidateLoan, opt
 	return out, nil
 }
 
+func (c *msgClient) LiquidStake(ctx context.Context, in *MsgLiquidStake, opts ...grpc.CallOption) (*MsgLiquidStakeResponse, error) {
+	out := new(MsgLiquidStakeResponse)
+	err := c.cc.Invoke(ctx, "/credimint.credimint.Msg/LiquidStake", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	RequestLoan(context.Context, *MsgRequestLoan) (*MsgRequestLoanResponse, error)
 	ApproveLoan(context.Context, *MsgApproveLoan) (*MsgApproveLoanResponse, error)
 	RepayLoan(context.Context, *MsgRepayLoan) (*MsgRepayLoanResponse, error)
 	LiquidateLoan(context.Context, *MsgLiquidateLoan) (*MsgLiquidateLoanResponse, error)
+	LiquidStake(context.Context, *MsgLiquidStake) (*MsgLiquidStakeResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -546,6 +658,9 @@ func (*UnimplementedMsgServer) RepayLoan(ctx context.Context, req *MsgRepayLoan)
 }
 func (*UnimplementedMsgServer) LiquidateLoan(ctx context.Context, req *MsgLiquidateLoan) (*MsgLiquidateLoanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LiquidateLoan not implemented")
+}
+func (*UnimplementedMsgServer) LiquidStake(ctx context.Context, req *MsgLiquidStake) (*MsgLiquidStakeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LiquidStake not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -624,6 +739,24 @@ func _Msg_LiquidateLoan_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_LiquidStake_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgLiquidStake)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).LiquidStake(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/credimint.credimint.Msg/LiquidStake",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).LiquidStake(ctx, req.(*MsgLiquidStake))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "credimint.credimint.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -643,6 +776,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LiquidateLoan",
 			Handler:    _Msg_LiquidateLoan_Handler,
+		},
+		{
+			MethodName: "LiquidStake",
+			Handler:    _Msg_LiquidStake_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -918,6 +1055,73 @@ func (m *MsgLiquidateLoanResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgLiquidStake) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgLiquidStake) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgLiquidStake) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Validator) > 0 {
+		i -= len(m.Validator)
+		copy(dAtA[i:], m.Validator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Validator)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Amount) > 0 {
+		i -= len(m.Amount)
+		copy(dAtA[i:], m.Amount)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Amount)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgLiquidStakeResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgLiquidStakeResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgLiquidStakeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -1042,6 +1246,36 @@ func (m *MsgLiquidateLoan) Size() (n int) {
 }
 
 func (m *MsgLiquidateLoanResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgLiquidStake) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Amount)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Validator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgLiquidStakeResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1810,6 +2044,202 @@ func (m *MsgLiquidateLoanResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgLiquidateLoanResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgLiquidStake) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgLiquidStake: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgLiquidStake: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Amount = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Validator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Validator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgLiquidStakeResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgLiquidStakeResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgLiquidStakeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

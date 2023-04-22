@@ -41,6 +41,15 @@ export interface MsgLiquidateLoan {
 export interface MsgLiquidateLoanResponse {
 }
 
+export interface MsgLiquidStake {
+  creator: string;
+  amount: string;
+  validator: string;
+}
+
+export interface MsgLiquidStakeResponse {
+}
+
 function createBaseMsgRequestLoan(): MsgRequestLoan {
   return { creator: "", amount: "", fee: "", collateral: "", deadline: "" };
 }
@@ -474,13 +483,120 @@ export const MsgLiquidateLoanResponse = {
   },
 };
 
+function createBaseMsgLiquidStake(): MsgLiquidStake {
+  return { creator: "", amount: "", validator: "" };
+}
+
+export const MsgLiquidStake = {
+  encode(message: MsgLiquidStake, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.amount !== "") {
+      writer.uint32(18).string(message.amount);
+    }
+    if (message.validator !== "") {
+      writer.uint32(26).string(message.validator);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgLiquidStake {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgLiquidStake();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.amount = reader.string();
+          break;
+        case 3:
+          message.validator = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgLiquidStake {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      amount: isSet(object.amount) ? String(object.amount) : "",
+      validator: isSet(object.validator) ? String(object.validator) : "",
+    };
+  },
+
+  toJSON(message: MsgLiquidStake): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.amount !== undefined && (obj.amount = message.amount);
+    message.validator !== undefined && (obj.validator = message.validator);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgLiquidStake>, I>>(object: I): MsgLiquidStake {
+    const message = createBaseMsgLiquidStake();
+    message.creator = object.creator ?? "";
+    message.amount = object.amount ?? "";
+    message.validator = object.validator ?? "";
+    return message;
+  },
+};
+
+function createBaseMsgLiquidStakeResponse(): MsgLiquidStakeResponse {
+  return {};
+}
+
+export const MsgLiquidStakeResponse = {
+  encode(_: MsgLiquidStakeResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgLiquidStakeResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgLiquidStakeResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgLiquidStakeResponse {
+    return {};
+  },
+
+  toJSON(_: MsgLiquidStakeResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgLiquidStakeResponse>, I>>(_: I): MsgLiquidStakeResponse {
+    const message = createBaseMsgLiquidStakeResponse();
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   RequestLoan(request: MsgRequestLoan): Promise<MsgRequestLoanResponse>;
   ApproveLoan(request: MsgApproveLoan): Promise<MsgApproveLoanResponse>;
   RepayLoan(request: MsgRepayLoan): Promise<MsgRepayLoanResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   LiquidateLoan(request: MsgLiquidateLoan): Promise<MsgLiquidateLoanResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  LiquidStake(request: MsgLiquidStake): Promise<MsgLiquidStakeResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -491,6 +607,7 @@ export class MsgClientImpl implements Msg {
     this.ApproveLoan = this.ApproveLoan.bind(this);
     this.RepayLoan = this.RepayLoan.bind(this);
     this.LiquidateLoan = this.LiquidateLoan.bind(this);
+    this.LiquidStake = this.LiquidStake.bind(this);
   }
   RequestLoan(request: MsgRequestLoan): Promise<MsgRequestLoanResponse> {
     const data = MsgRequestLoan.encode(request).finish();
@@ -514,6 +631,12 @@ export class MsgClientImpl implements Msg {
     const data = MsgLiquidateLoan.encode(request).finish();
     const promise = this.rpc.request("credimint.credimint.Msg", "LiquidateLoan", data);
     return promise.then((data) => MsgLiquidateLoanResponse.decode(new _m0.Reader(data)));
+  }
+
+  LiquidStake(request: MsgLiquidStake): Promise<MsgLiquidStakeResponse> {
+    const data = MsgLiquidStake.encode(request).finish();
+    const promise = this.rpc.request("credimint.credimint.Msg", "LiquidStake", data);
+    return promise.then((data) => MsgLiquidStakeResponse.decode(new _m0.Reader(data)));
   }
 }
 

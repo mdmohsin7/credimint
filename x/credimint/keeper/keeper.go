@@ -4,10 +4,12 @@ import (
 	"fmt"
 
 	"credimint/x/credimint/types"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
+	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	"github.com/ignite/cli/ignite/pkg/cosmosibckeeper"
 	"github.com/tendermint/tendermint/libs/log"
 )
@@ -20,7 +22,8 @@ type (
 		memKey     storetypes.StoreKey
 		paramstore paramtypes.Subspace
 
-		bankKeeper types.BankKeeper
+		bankKeeper    types.BankKeeper
+		StakingKeeper stakingkeeper.Keeper
 	}
 )
 

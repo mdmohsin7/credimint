@@ -8,27 +8,16 @@ import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
 import { MsgLiquidateLoan } from "./types/credimint/credimint/tx";
-import { MsgRequestLoan } from "./types/credimint/credimint/tx";
-import { MsgRepayLoan } from "./types/credimint/credimint/tx";
 import { MsgApproveLoan } from "./types/credimint/credimint/tx";
+import { MsgRepayLoan } from "./types/credimint/credimint/tx";
+import { MsgLiquidStake } from "./types/credimint/credimint/tx";
+import { MsgRequestLoan } from "./types/credimint/credimint/tx";
 
 
-export { MsgLiquidateLoan, MsgRequestLoan, MsgRepayLoan, MsgApproveLoan };
+export { MsgLiquidateLoan, MsgApproveLoan, MsgRepayLoan, MsgLiquidStake, MsgRequestLoan };
 
 type sendMsgLiquidateLoanParams = {
   value: MsgLiquidateLoan,
-  fee?: StdFee,
-  memo?: string
-};
-
-type sendMsgRequestLoanParams = {
-  value: MsgRequestLoan,
-  fee?: StdFee,
-  memo?: string
-};
-
-type sendMsgRepayLoanParams = {
-  value: MsgRepayLoan,
   fee?: StdFee,
   memo?: string
 };
@@ -39,21 +28,43 @@ type sendMsgApproveLoanParams = {
   memo?: string
 };
 
+type sendMsgRepayLoanParams = {
+  value: MsgRepayLoan,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgLiquidStakeParams = {
+  value: MsgLiquidStake,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgRequestLoanParams = {
+  value: MsgRequestLoan,
+  fee?: StdFee,
+  memo?: string
+};
+
 
 type msgLiquidateLoanParams = {
   value: MsgLiquidateLoan,
 };
 
-type msgRequestLoanParams = {
-  value: MsgRequestLoan,
+type msgApproveLoanParams = {
+  value: MsgApproveLoan,
 };
 
 type msgRepayLoanParams = {
   value: MsgRepayLoan,
 };
 
-type msgApproveLoanParams = {
-  value: MsgApproveLoan,
+type msgLiquidStakeParams = {
+  value: MsgLiquidStake,
+};
+
+type msgRequestLoanParams = {
+  value: MsgRequestLoan,
 };
 
 
@@ -88,17 +99,17 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgRequestLoan({ value, fee, memo }: sendMsgRequestLoanParams): Promise<DeliverTxResponse> {
+		async sendMsgApproveLoan({ value, fee, memo }: sendMsgApproveLoanParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgRequestLoan: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgApproveLoan: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgRequestLoan({ value: MsgRequestLoan.fromPartial(value) })
+				let msg = this.msgApproveLoan({ value: MsgApproveLoan.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgRequestLoan: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgApproveLoan: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -116,17 +127,31 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgApproveLoan({ value, fee, memo }: sendMsgApproveLoanParams): Promise<DeliverTxResponse> {
+		async sendMsgLiquidStake({ value, fee, memo }: sendMsgLiquidStakeParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgApproveLoan: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgLiquidStake: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgApproveLoan({ value: MsgApproveLoan.fromPartial(value) })
+				let msg = this.msgLiquidStake({ value: MsgLiquidStake.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgApproveLoan: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgLiquidStake: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgRequestLoan({ value, fee, memo }: sendMsgRequestLoanParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgRequestLoan: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgRequestLoan({ value: MsgRequestLoan.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgRequestLoan: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -139,11 +164,11 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgRequestLoan({ value }: msgRequestLoanParams): EncodeObject {
+		msgApproveLoan({ value }: msgApproveLoanParams): EncodeObject {
 			try {
-				return { typeUrl: "/credimint.credimint.MsgRequestLoan", value: MsgRequestLoan.fromPartial( value ) }  
+				return { typeUrl: "/credimint.credimint.MsgApproveLoan", value: MsgApproveLoan.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgRequestLoan: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgApproveLoan: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -155,11 +180,19 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgApproveLoan({ value }: msgApproveLoanParams): EncodeObject {
+		msgLiquidStake({ value }: msgLiquidStakeParams): EncodeObject {
 			try {
-				return { typeUrl: "/credimint.credimint.MsgApproveLoan", value: MsgApproveLoan.fromPartial( value ) }  
+				return { typeUrl: "/credimint.credimint.MsgLiquidStake", value: MsgLiquidStake.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgApproveLoan: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgLiquidStake: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgRequestLoan({ value }: msgRequestLoanParams): EncodeObject {
+			try {
+				return { typeUrl: "/credimint.credimint.MsgRequestLoan", value: MsgRequestLoan.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgRequestLoan: Could not create message: ' + e.message)
 			}
 		},
 		
