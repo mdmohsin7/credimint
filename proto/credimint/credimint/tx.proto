@@ -12,6 +12,7 @@ service Msg {
   rpc RepayLoan(MsgRepayLoan) returns (MsgRepayLoanResponse);
   rpc LiquidateLoan(MsgLiquidateLoan) returns (MsgLiquidateLoanResponse);
   rpc LiquidStake(MsgLiquidStake) returns (MsgLiquidStakeResponse);
+  rpc CancelLoan(MsgCancelLoan) returns (MsgCancelLoanResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -59,6 +60,14 @@ message MsgLiquidStake {
 }
 
 message MsgLiquidStakeResponse {
+}
+
+message MsgCancelLoan {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgCancelLoanResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message

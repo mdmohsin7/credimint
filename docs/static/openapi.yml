@@ -66710,6 +66710,8 @@ definitions:
         type: string
   credimint.credimint.MsgApproveLoanResponse:
     type: object
+  credimint.credimint.MsgCancelLoanResponse:
+    type: object
   credimint.credimint.MsgLiquidStakeResponse:
     type: object
   credimint.credimint.MsgLiquidateLoanResponse:
