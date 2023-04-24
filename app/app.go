@@ -108,6 +108,9 @@ import (
 	credimintmodulekeeper "credimint/x/credimint/keeper"
 	credimintmoduletypes "credimint/x/credimint/types"
 
+	lqsmodule "credimint/x/lqs"
+	lqsmodulekeeper "credimint/x/lqs/keeper"
+	lqsmoduletypes "credimint/x/lqs/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "credimint/app/params"
@@ -167,6 +170,7 @@ var (
 		ica.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		credimintmodule.AppModuleBasic{},
+		lqsmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -181,6 +185,7 @@ var (
 		govtypes.ModuleName:             {authtypes.Burner},
 		ibctransfertypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
 		credimintmoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner, authtypes.Staking},
+		lqsmoduletypes.ModuleName:       {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -243,6 +248,8 @@ type App struct {
 
 	ScopedCredimintKeeper capabilitykeeper.ScopedKeeper
 	CredimintKeeper       credimintmodulekeeper.Keeper
+
+	LqsKeeper lqsmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -288,6 +295,7 @@ func New(
 		ibctransfertypes.StoreKey, icahosttypes.StoreKey, capabilitytypes.StoreKey, group.StoreKey,
 		icacontrollertypes.StoreKey,
 		credimintmoduletypes.StoreKey,
+		lqsmoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -520,6 +528,22 @@ func New(
 	credimintModule := credimintmodule.NewAppModule(appCodec, app.CredimintKeeper, app.AccountKeeper, app.BankKeeper)
 
 	credimintIBCModule := credimintmodule.NewIBCModule(app.CredimintKeeper)
+
+	app.LqsKeeper = *lqsmodulekeeper.NewKeeper(
+		appCodec,
+		keys[lqsmoduletypes.StoreKey],
+		keys[lqsmoduletypes.MemStoreKey],
+		app.GetSubspace(lqsmoduletypes.ModuleName),
+
+		app.BankKeeper,
+		app.AccountKeeper,
+		app.DistrKeeper,
+		app.SlashingKeeper,
+		app.StakingKeeper,
+		app.MintKeeper,
+	)
+	lqsModule := lqsmodule.NewAppModule(appCodec, app.LqsKeeper, app.AccountKeeper, app.BankKeeper)
+
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	// Sealing prevents other modules from creating scoped sub-keepers
@@ -567,6 +591,7 @@ func New(
 		transferModule,
 		icaModule,
 		credimintModule,
+		lqsModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -597,6 +622,7 @@ func New(
 		paramstypes.ModuleName,
 		vestingtypes.ModuleName,
 		credimintmoduletypes.ModuleName,
+		lqsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -622,6 +648,7 @@ func New(
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
 		credimintmoduletypes.ModuleName,
+		lqsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -652,6 +679,7 @@ func New(
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
 		credimintmoduletypes.ModuleName,
+		lqsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -682,6 +710,7 @@ func New(
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
 		credimintModule,
+		lqsModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -881,6 +910,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(credimintmoduletypes.ModuleName)
+	paramsKeeper.Subspace(lqsmoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper

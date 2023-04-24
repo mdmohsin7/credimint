@@ -1,10 +1,12 @@
 // THIS FILE IS GENERATED AUTOMATICALLY. DO NOT MODIFY.
 
 import CredimintCredimint from './credimint.credimint'
+import CredimintLqs from './credimint.lqs'
 
 
 export default { 
   CredimintCredimint: load(CredimintCredimint, 'credimint.credimint'),
+  CredimintLqs: load(CredimintLqs, 'credimint.lqs'),
   
 }
 
